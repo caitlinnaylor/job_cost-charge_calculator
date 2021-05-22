@@ -137,6 +137,7 @@ class JobCost:
         self.name = self.first_name_var.get() + " " + self.last_name_var.get()
         self.distance = float(self. distance_var.get())
 
+        #Round Distance
         if self.distance % 1 >=0.5:
             self.distance = math.ceil(self.distance)
         else:
@@ -150,8 +151,6 @@ class JobCost:
         self.job = [self.job_num, self.name, self.distance, self.minutes, self.wof_and_tune, self.charge]
         
         self.jobs.append(self.job)
-
-        print(self.jobs)
 
         #Reset Input Areas
         self.job_num_var.set("")
