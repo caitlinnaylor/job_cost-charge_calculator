@@ -13,7 +13,7 @@ class Job:
         self.wof_and_tune = wof_and_tune
         self.charge = charge
 
-class JobCost:
+class JobCostGUI:
     def __init__(self, parent):
         self.jobs = []
         #Add Jobs Frame
@@ -120,9 +120,10 @@ class JobCost:
             self.wof_tune_rbs[i].grid(row = 8, column = i +1, sticky = NW)
 
         #Enter Button to add a job
-        #lambda code from https://www.reddit.com/r/learnpython/comments/cdfmn5/tkinter_help_command_running_before_clicked/
+        #lambda code from
+        #https://www.reddit.com/r/learnpython/comments/cdfmn5/tkinter_help_command_running_before_clicked/
         self.enter_job_btn = Button(self.add_job_frame, text = "Enter", font = ("Sans Serif", 11),
-                                    width = 10, command = lambda:self.store_input()) 
+                                    width = 10, command = lambda:self.store_input(Job)) 
         self.enter_job_btn.grid(row = 9, column = 3, sticky = NE)
 
         #Show Jobs Buttons
@@ -132,7 +133,7 @@ class JobCost:
 
         self.job_cards_frame = Frame(parent)
 
-    def store_input(self):
+    def store_input(self, Job):
         self.job_num = self.job_num_var.get()
         self.name = self.first_name_var.get() + " " + self.last_name_var.get()
         self.distance = float(self. distance_var.get())
@@ -147,11 +148,15 @@ class JobCost:
         self.wof_and_tune = self.wof_tune_var.get()
 
         self.calc_charge()
+
+        #Indivual Job Objects
+        self.job = Job(self.job_num, self.name, self.distance, self.minutes, self.wof_and_tune, self.charge)
         
-        self.job = [self.job_num, self.name, self.distance, self.minutes, self.wof_and_tune, self.charge]
-        
+        #Collection of the Objects  
         self.jobs.append(self.job)
 
+        print(self.jobs[0].job_num, self.jobs[0].name, self.jobs[0].distance, self.jobs[0].minutes, self.jobs[0].wof_and_tune, self.jobs[0].charge)
+        
         #Reset Input Areas
         self.job_num_var.set("")
         self.first_name_var.set("")
@@ -184,6 +189,7 @@ class JobCost:
 #Main Routine
 if __name__=="__main__":
     root= Tk()
-    ratings = JobCost(root)
+    ratings = JobCostGUI(root)
     root.title("Job Cost/Charge Calculator")
     root.mainloop()
+
