@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 #15/05/21
-#Caitlin Naylor
+#Caitlin Naylor 
 #Job Cost/Charge Calulator
 
 class Job:
@@ -155,8 +155,6 @@ class JobCostGUI:
         #Collection of the Objects  
         self.jobs.append(self.job)
 
-        print(self.jobs[0].job_num, self.jobs[0].name, self.jobs[0].distance, self.jobs[0].minutes, self.jobs[0].wof_and_tune, self.jobs[0].charge)
-        
         #Reset Input Areas
         self.job_num_var.set("")
         self.first_name_var.set("")
@@ -181,9 +179,27 @@ class JobCostGUI:
     def get_to_job_cards(self):
          self.add_job_frame.grid_remove()
          self.job_cards_frame.grid(row = 0, column = 0)
+         self.job_cards_frame.configure(pady = 10, padx = 10)
 
-         self.test_label = Label(self.job_cards_frame, text = "Welcome to the Job Cards Frame")
-         self.test_label.grid(row =1, column = 0)
+         #Company Logo
+         #Suzy has supplied and given permission for this logo to be used in this programme
+
+         self.logo = PhotoImage(file = "logo.gif")
+         self.logo_label = Label(self.job_cards_frame, image = self.logo)
+         self.logo_label.grid(row = 0, column = 0, columnspan = 2)
+
+         #Jobs Heading Label
+         self.jobs_label = Label(self.job_cards_frame, text = "Jobs",
+                                 font = ("Sans Serif", 17), pady = 5)
+         self.jobs_label.grid(row = 1, column = 0, sticky = NW)
+
+         #Text Box of Job Info
+         self.job_info = Text(self.job_cards_frame, width = 54, height = 6,
+                                 font = ("Sans Serif", 11))
+         self.job_info.grid(row = 2, column = 0)
+
+         self.job_info.configure(state = 'disabled')
+            
               
 
 #Main Routine
