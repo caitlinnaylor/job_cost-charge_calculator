@@ -215,11 +215,11 @@ class JobCostGUI:
 
          #Next and Prev Buttons
          self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
-                              font = ("Sans Serif", 11), width = 8)
+                              font = ("Sans Serif", 11), width = 8, command = self.nextjob)
          self.nextbtn.grid(row = 3, column = 1, sticky = NE, pady = 5)
 
          self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
-                              font = ("Sans Serif", 11), width = 8)
+                              font = ("Sans Serif", 11), width = 8, command = self.prevjob)
          self.prevbtn.grid(row = 3, column = 0, sticky = NW, pady = 5)
 
          #Getting to Add a Job Frame Button
@@ -227,7 +227,30 @@ class JobCostGUI:
                               font = ("Sans Serif", 11), width = 8)
          self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
             
-              
+    def nextjob(self):
+        if self.index != (len(self.jobs)-1):
+            self.index+=1
+        else:
+            self.index = 0
+
+        self.job_info.configure(state = "normal")
+        self.job_info.delete(1.0, END)
+        self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
+                              "Customer Name: " + self.jobs[self.index].name + "\n" +
+                              "Total Charge: $" + str(self.jobs[self.index].charge))
+
+
+    def prevjob(self):
+        if self.index !=0:
+            self.index-=1
+        else:
+            self.index = (len(self.jobs)-1)
+
+        self.job_info.configure(state = "normal")
+        self.job_info.delete(1.0, END)
+        self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
+                              "Customer Name: " + self.jobs[self.index].name + "\n" +
+                              "Total Charge: $" + str(self.jobs[self.index].charge))
 
 #Main Routine
 if __name__=="__main__":
