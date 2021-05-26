@@ -233,11 +233,12 @@ class JobCostGUI:
         else:
             self.index = 0
 
-        self.job_info.configure(state = "normal")
+        self.job_info.configure(state = "normal") #undisabling box so content can change
         self.job_info.delete(1.0, END)
         self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
                               "Customer Name: " + self.jobs[self.index].name + "\n" +
                               "Total Charge: $" + str(self.jobs[self.index].charge))
+        self.job_info.configure(state = "disabled")
 
 
     def prevjob(self):
@@ -251,6 +252,7 @@ class JobCostGUI:
         self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
                               "Customer Name: " + self.jobs[self.index].name + "\n" +
                               "Total Charge: $" + str(self.jobs[self.index].charge))
+        self.job_info.configure(state = "disabled")
 
 #Main Routine
 if __name__=="__main__":
