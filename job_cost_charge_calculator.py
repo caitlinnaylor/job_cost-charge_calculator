@@ -191,14 +191,31 @@ class JobCostGUI:
          #Jobs Heading Label
          self.jobs_label = Label(self.job_cards_frame, text = "Jobs",
                                  font = ("Sans Serif", 17), pady = 5)
-         self.jobs_label.grid(row = 1, column = 0, sticky = NW)
+         self.jobs_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
          #Text Box of Job Info
-         self.job_info = Text(self.job_cards_frame, width = 54, height = 6,
-                                 font = ("Sans Serif", 11))
-         self.job_info.grid(row = 2, column = 0)
+         self.job_info = Text(self.job_cards_frame, width = 47, height = 3,
+                                 font = ("Sans Serif", 13), pady = 8, padx = 8)
+         self.job_info.grid(row = 2, column = 0, columnspan = 2)
 
-         self.job_info.configure(state = 'disabled')
+         self.job_info.insert(END,"Job Number: " + "\n" + "Customer Name: "
+                               + "\n" + "Total Charge: $")
+
+         self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
+
+         #Next and Prev Buttons
+         self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
+                              font = ("Sans Serif", 11), width = 8)
+         self.nextbtn.grid(row = 3, column = 1, sticky = NE, pady = 5)
+
+         self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
+                              font = ("Sans Serif", 11), width = 8)
+         self.prevbtn.grid(row = 3, column = 0, sticky = NW, pady = 5)
+
+         #Getting to Add a Job Frame Button
+         self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
+                              font = ("Sans Serif", 11), width = 8)
+         self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
             
               
 
