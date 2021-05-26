@@ -192,7 +192,6 @@ class JobCostGUI:
          #Company Logo
          #Suzy has supplied and given permission for this logo to be used in this programme
 
-         self.logo = PhotoImage(file = "logo.gif")
          self.logo_label = Label(self.job_cards_frame, image = self.logo)
          self.logo_label.grid(row = 0, column = 0, columnspan = 2)
 
@@ -224,7 +223,7 @@ class JobCostGUI:
 
          #Getting to Add a Job Frame Button
          self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
-                              font = ("Sans Serif", 11), width = 8)
+                              font = ("Sans Serif", 11), width = 8, command = self.get_to_add_jobs)
          self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
             
     def nextjob(self):
@@ -253,6 +252,10 @@ class JobCostGUI:
                               "Customer Name: " + self.jobs[self.index].name + "\n" +
                               "Total Charge: $" + str(self.jobs[self.index].charge))
         self.job_info.configure(state = "disabled")
+
+    def get_to_add_jobs(self):
+        self.job_cards_frame.grid_remove()
+        self.add_job_frame.grid(row = 0, column = 0)
 
 #Main Routine
 if __name__=="__main__":
