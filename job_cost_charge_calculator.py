@@ -176,10 +176,18 @@ class JobCostGUI:
         if self.minutes >0:
             self.charge += 0.80 *self.minutes
 
+        #making charge 2dp as common for money
+        #code inspired by:
+        #https://www.kite.com/python/answers/how-to-print-a-float-with-two-decimal-places-in-python#:~:
+            #text=Use%20str.,number%20with%20two%20decimal%20places.
+        self.charge = "{:.2f}".format(self.charge) 
+
+
     def get_to_job_cards(self):
          self.add_job_frame.grid_remove()
          self.job_cards_frame.grid(row = 0, column = 0)
          self.job_cards_frame.configure(pady = 10, padx = 10)
+         self.index = 0 #which job the cards are on
 
          #Company Logo
          #Suzy has supplied and given permission for this logo to be used in this programme
@@ -198,8 +206,10 @@ class JobCostGUI:
                                  font = ("Sans Serif", 13), pady = 8, padx = 8)
          self.job_info.grid(row = 2, column = 0, columnspan = 2)
 
-         self.job_info.insert(END,"Job Number: " + "\n" + "Customer Name: "
-                               + "\n" + "Total Charge: $")
+
+         self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
+                              "Customer Name: " + self.jobs[self.index].name + "\n" +
+                              "Total Charge: $" + str(self.jobs[self.index].charge))
 
          self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
 
