@@ -145,7 +145,7 @@ class JobCostGUI:
         self.error_label.configure(text = "") #Removing any previous error messages
         self.error_message_frame.grid_remove()
 
-        #All input places need to be filled in
+        #All input places need to be filled in 
         if self.minutes_var.get() == "" or self.wof_tune_var.get() == "0" or \
            self.first_name_var.get() == "" or self.last_name_var.get == "" or \
            self.job_num_var.get() == "" or self.distance_var.get() == "":
@@ -154,6 +154,7 @@ class JobCostGUI:
             self.error_label.grid(row = 0, column = 1 )
             self.error_message_frame.grid(row = 0, column = 0, sticky = N)
         else:
+            #If letters or decimals are entered in a field that does not take that type 
             while True:
                 try:
                     self.error_label.configure(text = "") #Removing any previous error messages
@@ -211,8 +212,6 @@ and distance must be numbers and that job number must be a whole number.""")
                     self.error_message_frame.grid(row = 0, column = 0, sticky = N)
                     break
 
-                
-
     def calc_charge(self):
         self.charge = 0
         FLAT_RATE = 10
@@ -236,7 +235,7 @@ and distance must be numbers and that job number must be a whole number.""")
 
     def get_to_job_cards(self):
          self.error_label.configure(text = "")
-         self.error_message_frame.grid_remove()
+         self.error_message_frame.grid_remove() #removing any previous error messages
          if len(self.jobs)>0:
              self.add_job_frame.grid_remove()
              self.job_cards_frame.grid(row = 0, column = 0)
@@ -287,34 +286,46 @@ and distance must be numbers and that job number must be a whole number.""")
              self.error_message_frame.grid(row = 0, column = 0, sticky = N) 
             
     def nextjob(self):
-        if self.index != (len(self.jobs)-1): #if at end of list, go back to start
-            self.index+=1
+        if len(self.jobs) > 1:
+            if self.index != (len(self.jobs)-1): #if at end of list, go back to start
+                self.index+=1
+            else:
+                self.index = 0
+
+            self.job_info.configure(state = "normal") #undisabling box so content can change
+            #updating text box to info for next job
+            self.job_info.delete(1.0, END)
+            self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
+                                  "Customer Name: " + self.jobs[self.index].name + "\n" +
+                                  "Total Charge: $" + str(self.jobs[self.index].charge))
+            self.job_info.configure(state = "disabled")
         else:
-            self.index = 0
-
-        self.job_info.configure(state = "normal") #undisabling box so content can change
-        #updating text box to info for next job
-        self.job_info.delete(1.0, END)
-        self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
-                              "Customer Name: " + self.jobs[self.index].name + "\n" +
-                              "Total Charge: $" + str(self.jobs[self.index].charge))
-        self.job_info.configure(state = "disabled")
-
+            self.error_label.configure(text = "There is only one job stored")
+            self.error_label.grid(row = 0, column = 1 )
+            self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+                                          
 
     def prevjob(self):
-        if self.index !=0:
-            self.index-=1
-        else:
-            self.index = (len(self.jobs)-1)
+        if len(self.jobs) > 0:
+            if self.index !=0:
+                self.index-=1
+            else:
+                self.index = (len(self.jobs)-1)
 
-        self.job_info.configure(state = "normal")
-        self.job_info.delete(1.0, END)
-        self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
-                              "Customer Name: " + self.jobs[self.index].name + "\n" +
-                              "Total Charge: $" + str(self.jobs[self.index].charge))
-        self.job_info.configure(state = "disabled")
+            self.job_info.configure(state = "normal")
+            self.job_info.delete(1.0, END)
+            self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
+                                  "Customer Name: " + self.jobs[self.index].name + "\n" +
+                                  "Total Charge: $" + str(self.jobs[self.index].charge))
+            self.job_info.configure(state = "disabled")
+        else:
+            self.error_label.configure(text = "There is only one job stored")
+            self.error_label.grid(row = 0, column = 1 )
+            self.error_message_frame.grid(row = 0, column = 0, sticky = N)
 
     def get_to_add_jobs(self):
+        self.error_label.configure(text = "")
+        self.error_message_frame.grid_remove() #removing any previous error messages
         self.job_cards_frame.grid_remove()
         self.add_job_frame.grid(row = 0, column = 0)
         self.add_job_frame.update_idletasks()
