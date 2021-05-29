@@ -173,7 +173,7 @@ Please increase minutes spent on virus protection or change WOF and Tune to 'Yes
                     else:
                         self.distance = float(self. distance_var.get())
                         self.job_num = int(self.job_num_var.get())
-                        
+                            
                         #If numbers below boundary are entered
                         #Placed after storage as for calculation variables must be int/float
                         if self.minutes < 0 or self.distance < 0 or self.job_num < 1:
@@ -186,6 +186,19 @@ job number cannot be below 1, and minutes and distance cannot be below 0.""")
                         else:
                             self.name = self.first_name_var.get().strip().capitalize() + " " + \
                                         self.last_name_var.get().strip().capitalize()
+
+
+                            #job number must be unique
+                            if len(self.jobs)>0:
+                                self.add_job_frame.update_idletasks()
+                                for i in range(len(self.jobs)):
+                                    if self.job_num == self.jobs[i].job_num: #comparing with other job numbers
+                                        self.add_job_frame.update_idletasks() 
+                                        self.error_label.configure(text = """Please change the job number.
+The entered job number belongs to another job.""")
+                                        self.error_label.grid(row = 0, column = 1 )
+                                        self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+                                        self.job_num = 0 #this allows this entry to be easily identified as a repeat
 
                             #Round Distance
                             if self.distance % 1 >=0.5:
@@ -202,16 +215,23 @@ job number cannot be below 1, and minutes and distance cannot be below 0.""")
                             
                             #Collection of the Objects  
                             self.jobs.append(self.job)
+                            
+                            #If job number has been repeated, remove the entry that was saved
+                            if self.jobs[-1].job_num == 0:
+                                self.jobs.pop(-1)
+                                        
 
                             #Reset Input Areas
-                            self.job_num_var.set("")
-                            self.first_name_var.set("")
-                            self.last_name_var.set("")
-                            self.distance_var.set("")
-                            self.minutes_var.set("")
-                            self.wof_tune_var.set(0)
+                            if self.job_num !=0:
+                                self.job_num_var.set("")
+                                self.first_name_var.set("")
+                                self.last_name_var.set("")
+                                self.distance_var.set("")
+                                self.minutes_var.set("")
+                                self.wof_tune_var.set(0)
 
                             break
+                       
                             
                 except:
                     self.add_job_frame.update_idletasks() 
@@ -220,6 +240,7 @@ and distance must be numbers and that job number must be a whole number.""")
                     self.error_label.grid(row = 0, column = 1 )
                     self.error_message_frame.grid(row = 0, column = 0, sticky = N)
                     break
+                
 
     def calc_charge(self):
         self.charge = 0
