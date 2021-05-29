@@ -169,6 +169,7 @@ class JobCostGUI:
 Please increase minutes spent on virus protection or change WOF and Tune to 'Yes'""")
                         self.error_label.grid(row = 0, column = 1 )
                         self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+                        break
 
                     else:
                         self.distance = float(self. distance_var.get())
