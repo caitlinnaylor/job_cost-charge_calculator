@@ -205,48 +205,55 @@ Please increase minutes spent on virus protection or change WOF and Tune to 'Yes
 
 
     def get_to_job_cards(self):
-         self.add_job_frame.grid_remove()
-         self.job_cards_frame.grid(row = 0, column = 0)
-         self.job_cards_frame.configure(pady = 10, padx = 10)
-         self.index = 0 #which job the cards are on
+         self.error_label.configure(text = "")
+         self.error_message_frame.grid_remove()
+         if len(self.jobs)>0:
+             self.add_job_frame.grid_remove()
+             self.job_cards_frame.grid(row = 0, column = 0)
+             self.job_cards_frame.configure(pady = 10, padx = 10)
+             self.index = 0 #which job the cards are on
 
-         #Company Logo
-         #Suzy has supplied and given permission for this logo to be used in this programme
+             #Company Logo
+             #Suzy has supplied and given permission for this logo to be used in this programme
 
-         self.logo_label = Label(self.job_cards_frame, image = self.logo)
-         self.logo_label.grid(row = 0, column = 0, columnspan = 2)
+             self.logo_label = Label(self.job_cards_frame, image = self.logo)
+             self.logo_label.grid(row = 0, column = 0, columnspan = 2)
 
-         #Jobs Heading Label
-         self.jobs_label = Label(self.job_cards_frame, text = "Jobs",
-                                 font = ("Sans Serif", 17), pady = 5)
-         self.jobs_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
+             #Jobs Heading Label
+             self.jobs_label = Label(self.job_cards_frame, text = "Jobs",
+                                     font = ("Sans Serif", 17), pady = 5)
+             self.jobs_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
-         #Text Box of Job Info
-         self.job_info = Text(self.job_cards_frame, width = 47, height = 3,
-                                 font = ("Sans Serif", 13), pady = 8, padx = 8)
-         self.job_info.grid(row = 2, column = 0, columnspan = 2)
+             #Text Box of Job Info
+             self.job_info = Text(self.job_cards_frame, width = 47, height = 3,
+                                     font = ("Sans Serif", 13), pady = 8, padx = 8)
+             self.job_info.grid(row = 2, column = 0, columnspan = 2)
 
 
-         self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
-                              "Customer Name: " + self.jobs[self.index].name + "\n" +
-                              "Total Charge: $" + str(self.jobs[self.index].charge))
+             self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
+                                  "Customer Name: " + self.jobs[self.index].name + "\n" +
+                                  "Total Charge: $" + str(self.jobs[self.index].charge))
 
-         self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
+             self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
 
-         #Next and Prev Buttons
-         self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
-                              font = ("Sans Serif", 11), width = 8, command = self.nextjob)
-         self.nextbtn.grid(row = 3, column = 1, sticky = NE, pady = 5)
+             #Next and Prev Buttons
+             self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
+                                  font = ("Sans Serif", 11), width = 8, command = self.nextjob)
+             self.nextbtn.grid(row = 3, column = 1, sticky = NE, pady = 5)
 
-         self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
-                              font = ("Sans Serif", 11), width = 8, command = self.prevjob)
-         self.prevbtn.grid(row = 3, column = 0, sticky = NW, pady = 5)
+             self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
+                                  font = ("Sans Serif", 11), width = 8, command = self.prevjob)
+             self.prevbtn.grid(row = 3, column = 0, sticky = NW, pady = 5)
 
-         #Getting to Add a Job Frame Button
-         self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
-                              font = ("Sans Serif", 11), width = 8,
-                                   command = self.get_to_add_jobs)
-         self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
+             #Getting to Add a Job Frame Button
+             self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
+                                  font = ("Sans Serif", 11), width = 8,
+                                       command = self.get_to_add_jobs)
+             self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
+         else:
+             self.error_label.configure(text = "There are no jobs stored")
+             self.error_label.grid(row = 0, column = 1 )
+             self.error_message_frame.grid(row = 0, column = 0, sticky = N) 
             
     def nextjob(self):
         if self.index != (len(self.jobs)-1): #if at end of list, go back to start
