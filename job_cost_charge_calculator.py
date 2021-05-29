@@ -159,54 +159,63 @@ class JobCostGUI:
                 try:
                     self.error_label.configure(text = "") #Removing any previous error messages
                     self.error_message_frame.grid_remove()
-                    self.add_job_frame.update_idletasks()
+                    self.add_job_frame.update_idletasks() 
                     self.minutes = float(self.minutes_var.get())
                     self.wof_and_tune = self.wof_tune_var.get()
                     #WOF and tune cannot be No if minutes is zero as then no task has been done 
                     if  self.minutes == 0 and self.wof_and_tune == "No":
                         self.add_job_frame.update_idletasks()
-                        self.minutes_var.set("")
-                        self.wof_tune_var.set(0)
                         self.error_label.configure(text = """There is no task chosen.
 Please increase minutes spent on virus protection or change WOF and Tune to 'Yes'""")
                         self.error_label.grid(row = 0, column = 1 )
                         self.error_message_frame.grid(row = 0, column = 0, sticky = N)
 
                     else:
-                        self.job_num = int(self.job_num_var.get())
-                        self.name = self.first_name_var.get().strip().capitalize() + " " + \
-                                    self.last_name_var.get().strip().capitalize()
                         self.distance = float(self. distance_var.get())
-
-                        #Round Distance
-                        if self.distance % 1 >=0.5:
-                            self.distance = math.ceil(self.distance)
+                        self.job_num = int(self.job_num_var.get())
+                        
+                        #If numbers below boundary are entered
+                        #Placed after storage as for calculation variables must be int/float
+                        if self.minutes < 0 or self.distance < 0 or self.job_num < 1:
+                            self.add_job_frame.update_idletasks()
+                            self.error_label.configure(text = """That is not a valid entry. Please note that
+job number cannot be below 1, and minutes and distance cannot be below 0.""")
+                            self.error_label.grid(row = 0, column = 1 )
+                            self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+                            break
                         else:
-                            self.distance = math.floor(self.distance)
+                            self.name = self.first_name_var.get().strip().capitalize() + " " + \
+                                        self.last_name_var.get().strip().capitalize()
+
+                            #Round Distance
+                            if self.distance % 1 >=0.5:
+                                self.distance = math.ceil(self.distance)
+                            else:
+                                self.distance = math.floor(self.distance)
+                                
+
+                            self.calc_charge()
+
+                            #Indivual Job Objects
+                            self.job = Job(self.job_num, self.name, self.distance, self.minutes,
+                                           self.wof_and_tune, self.charge)
                             
+                            #Collection of the Objects  
+                            self.jobs.append(self.job)
 
-                        self.calc_charge()
+                            #Reset Input Areas
+                            self.job_num_var.set("")
+                            self.first_name_var.set("")
+                            self.last_name_var.set("")
+                            self.distance_var.set("")
+                            self.minutes_var.set("")
+                            self.wof_tune_var.set(0)
 
-                        #Indivual Job Objects
-                        self.job = Job(self.job_num, self.name, self.distance, self.minutes,
-                                       self.wof_and_tune, self.charge)
-                        
-                        #Collection of the Objects  
-                        self.jobs.append(self.job)
-
-                        #Reset Input Areas
-                        self.job_num_var.set("")
-                        self.first_name_var.set("")
-                        self.last_name_var.set("")
-                        self.distance_var.set("")
-                        self.minutes_var.set("")
-                        self.wof_tune_var.set(0)
-
-                        break
-                        
+                            break
+                            
                 except:
                     self.add_job_frame.update_idletasks() 
-                    self.error_label.configure(text = """That is not a valid input. Please note that job number, minutes,
+                    self.error_label.configure(text = """That is not a valid entry. Please note that job number, minutes,
 and distance must be numbers and that job number must be a whole number.""")
                     self.error_label.grid(row = 0, column = 1 )
                     self.error_message_frame.grid(row = 0, column = 0, sticky = N)
