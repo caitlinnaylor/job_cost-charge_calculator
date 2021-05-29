@@ -122,53 +122,74 @@ class JobCostGUI:
         #Enter Button to add a job
         #lambda code from
         #https://www.reddit.com/r/learnpython/comments/cdfmn5/tkinter_help_command_running_before_clicked/
-        self.enter_job_btn = Button(self.add_job_frame, text = "Enter", font = ("Sans Serif", 11),
-                                    width = 10, command = lambda:self.store_input(Job)) 
+        self.enter_job_btn = Button(self.add_job_frame, text = "Enter",
+                                    font = ("Sans Serif", 11),width = 10,
+                                    command = lambda:self.store_input(Job)) 
         self.enter_job_btn.grid(row = 9, column = 3, sticky = NE)
 
         #Show Jobs Buttons
-        self.show_jobs_btn = Button(self.add_job_frame, text = "Show Jobs", font = ("Sans Serif", 11),
-                                    width = 10, command = lambda:self.get_to_job_cards())
+        self.show_jobs_btn = Button(self.add_job_frame, text = "Show Jobs",
+                                    font = ("Sans Serif", 11), width = 10,
+                                    command = lambda:self.get_to_job_cards())
         self.show_jobs_btn.grid(row = 10, column = 3, pady = 5, sticky = NE)
 
+        #Creation of other frames
         self.job_cards_frame = Frame(parent)
 
-    def store_input(self, Job):
-        self.job_num = self.job_num_var.get()
-        self.name = self.first_name_var.get() + " " + self.last_name_var.get()
-        self.distance = float(self. distance_var.get())
+        self.error_message_frame = Frame(parent)
 
-        #Round Distance
-        if self.distance % 1 >=0.5:
-            self.distance = math.ceil(self.distance)
-        else:
-            self.distance = math.floor(self.distance)
-            
+        #Error message creation
+        self.error_label = Label(self.error_message_frame, font = ("Sans Serif", 9))
+
+    def store_input(self, Job):
         self.minutes = self.minutes_var.get()
         self.wof_and_tune = self.wof_tune_var.get()
+        self.error_label.configure(text = "")
+        self.error_message_frame.grid_remove()
+        if self.minutes == 0 and self.wof_and_tune == "No":
+            self.minutes_var.set("")
+            self.wof_tune_var.set(0)
+            self.error_label.configure(text = """There is no task chosen.
+Please increase minutes spent on virus protection or change WOF and Tune to 'Yes'""")
+            self.error_label.grid(row = 0, column = 1 )
+            self.error_message_frame.grid(row = 0, column = 0, sticky = N)
 
-        self.calc_charge()
+        else:
+            self.job_num = self.job_num_var.get()
+            self.name = self.first_name_var.get().strip().capitalize() + " " + self.last_name_var.get().strip().capitalize()
+            self.distance = float(self. distance_var.get())
 
-        #Indivual Job Objects
-        self.job = Job(self.job_num, self.name, self.distance, self.minutes, self.wof_and_tune, self.charge)
-        
-        #Collection of the Objects  
-        self.jobs.append(self.job)
+            #Round Distance
+            if self.distance % 1 >=0.5:
+                self.distance = math.ceil(self.distance)
+            else:
+                self.distance = math.floor(self.distance)
+                
 
-        #Reset Input Areas
-        self.job_num_var.set("")
-        self.first_name_var.set("")
-        self.last_name_var.set("")
-        self.distance_var.set("")
-        self.minutes_var.set("")
-        self.wof_tune_var.set(0)
+            self.calc_charge()
+
+            #Indivual Job Objects
+            self.job = Job(self.job_num, self.name, self.distance, self.minutes,
+                           self.wof_and_tune, self.charge)
+            
+            #Collection of the Objects  
+            self.jobs.append(self.job)
+
+            #Reset Input Areas
+            self.job_num_var.set("")
+            self.first_name_var.set("")
+            self.last_name_var.set("")
+            self.distance_var.set("")
+            self.minutes_var.set("")
+            self.wof_tune_var.set(0)
 
     def calc_charge(self):
         self.charge = 0
+        FLAT_RATE = 10
         if self.distance <= 5:
-            self.charge += 10
+            self.charge += FLAT_RATE
         else:
-            self.charge += 10 + ((self.distance - 5)*0.5)
+            self.charge += FLAT_RATE + ((self.distance - 5)*0.5)
 
         if self.wof_and_tune == self.wof_tune_rbs_names[0]: #yes
             self.charge += 100
@@ -223,16 +244,18 @@ class JobCostGUI:
 
          #Getting to Add a Job Frame Button
          self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
-                              font = ("Sans Serif", 11), width = 8, command = self.get_to_add_jobs)
+                              font = ("Sans Serif", 11), width = 8,
+                                   command = self.get_to_add_jobs)
          self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
             
     def nextjob(self):
-        if self.index != (len(self.jobs)-1):
+        if self.index != (len(self.jobs)-1): #if at end of list, go back to start
             self.index+=1
         else:
             self.index = 0
 
         self.job_info.configure(state = "normal") #undisabling box so content can change
+        #updating text box to info for next job
         self.job_info.delete(1.0, END)
         self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
                               "Customer Name: " + self.jobs[self.index].name + "\n" +
