@@ -39,7 +39,7 @@ class JobCostGUI:
         self.job_num_label.grid(row = 2, column = 0, sticky = NW)
 
         #Job Number Input
-        self.job_num_var = IntVar()
+        self.job_num_var = StringVar() #StringVar so that the text box is blank upon opening
         self.job_num_var.set("")
         self.job_num_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
                                  textvariable = self.job_num_var, width = 30)
@@ -94,8 +94,8 @@ class JobCostGUI:
         self.minutes_label.grid(row = 7, column = 0, sticky = NW)
 
         #Minutes Input
-        self.minutes_var = IntVar()
-        self.minutes_var.set("")
+        self.minutes_var = StringVar() #StringVar so that the text box is blank upon opening
+        self.minutes_var.set("") 
         self.minutes_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
                                  width = 30, textvariable = self.minutes_var)
         self.minutes_box.grid(row = 7, column = 1, columnspan = 3, sticky = NW)
@@ -138,50 +138,61 @@ class JobCostGUI:
 
         self.error_message_frame = Frame(parent)
 
-        #Error message creation
+        #Error message label creation
         self.error_label = Label(self.error_message_frame, font = ("Sans Serif", 9))
 
     def store_input(self, Job):
-        self.minutes = self.minutes_var.get()
-        self.wof_and_tune = self.wof_tune_var.get()
-        self.error_label.configure(text = "")
+        self.error_label.configure(text = "") #Removing any previous error messages
         self.error_message_frame.grid_remove()
-        if self.minutes == 0 and self.wof_and_tune == "No":
-            self.minutes_var.set("")
-            self.wof_tune_var.set(0)
-            self.error_label.configure(text = """There is no task chosen.
-Please increase minutes spent on virus protection or change WOF and Tune to 'Yes'""")
+
+        #All input places need to be filled in 
+        if self.minutes_var.get() == "" or self.wof_tune_var.get() == 0 or \
+           self.first_name_var.get() == "" or self.last_name_var.get == "" or \
+           self.job_num_var.get() == "" or self.distance_var.get() == "":
+            self.error_label.configure(text = "Please fill in all the entry areas before pressing enter.")
             self.error_label.grid(row = 0, column = 1 )
             self.error_message_frame.grid(row = 0, column = 0, sticky = N)
-
         else:
-            self.job_num = self.job_num_var.get()
-            self.name = self.first_name_var.get().strip().capitalize() + " " + self.last_name_var.get().strip().capitalize()
-            self.distance = float(self. distance_var.get())
+            self.minutes = float(self.minutes_var.get())
+            self.wof_and_tune = self.wof_tune_var.get()
+            #WOF and tune cannot be No if minutes is zero as then no task has been done 
+            if  self.minutes == 0 and self.wof_and_tune == "No":
+                self.minutes_var.set("")
+                self.wof_tune_var.set(0)
+                self.error_label.configure(text = """There is no task chosen.
+Please increase minutes spent on virus protection or change WOF and Tune to 'Yes'""")
+                self.error_label.grid(row = 0, column = 1 )
+                self.error_message_frame.grid(row = 0, column = 0, sticky = N)
 
-            #Round Distance
-            if self.distance % 1 >=0.5:
-                self.distance = math.ceil(self.distance)
             else:
-                self.distance = math.floor(self.distance)
+                self.job_num = int(self.job_num_var.get())
+                self.name = self.first_name_var.get().strip().capitalize() + " " + \
+                            self.last_name_var.get().strip().capitalize()
+                self.distance = float(self. distance_var.get())
+
+                #Round Distance
+                if self.distance % 1 >=0.5:
+                    self.distance = math.ceil(self.distance)
+                else:
+                    self.distance = math.floor(self.distance)
+                    
+
+                self.calc_charge()
+
+                #Indivual Job Objects
+                self.job = Job(self.job_num, self.name, self.distance, self.minutes,
+                               self.wof_and_tune, self.charge)
                 
+                #Collection of the Objects  
+                self.jobs.append(self.job)
 
-            self.calc_charge()
-
-            #Indivual Job Objects
-            self.job = Job(self.job_num, self.name, self.distance, self.minutes,
-                           self.wof_and_tune, self.charge)
-            
-            #Collection of the Objects  
-            self.jobs.append(self.job)
-
-            #Reset Input Areas
-            self.job_num_var.set("")
-            self.first_name_var.set("")
-            self.last_name_var.set("")
-            self.distance_var.set("")
-            self.minutes_var.set("")
-            self.wof_tune_var.set(0)
+                #Reset Input Areas
+                self.job_num_var.set("")
+                self.first_name_var.set("")
+                self.last_name_var.set("")
+                self.distance_var.set("")
+                self.minutes_var.set("")
+                self.wof_tune_var.set(0)
 
     def calc_charge(self):
         self.charge = 0
