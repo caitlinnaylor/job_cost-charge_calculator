@@ -145,54 +145,73 @@ class JobCostGUI:
         self.error_label.configure(text = "") #Removing any previous error messages
         self.error_message_frame.grid_remove()
 
-        #All input places need to be filled in 
-        if self.minutes_var.get() == "" or self.wof_tune_var.get() == 0 or \
+        #All input places need to be filled in
+        if self.minutes_var.get() == "" or self.wof_tune_var.get() == "0" or \
            self.first_name_var.get() == "" or self.last_name_var.get == "" or \
            self.job_num_var.get() == "" or self.distance_var.get() == "":
+            self.add_job_frame.update_idletasks()
             self.error_label.configure(text = "Please fill in all the entry areas before pressing enter.")
             self.error_label.grid(row = 0, column = 1 )
             self.error_message_frame.grid(row = 0, column = 0, sticky = N)
         else:
-            self.minutes = float(self.minutes_var.get())
-            self.wof_and_tune = self.wof_tune_var.get()
-            #WOF and tune cannot be No if minutes is zero as then no task has been done 
-            if  self.minutes == 0 and self.wof_and_tune == "No":
-                self.minutes_var.set("")
-                self.wof_tune_var.set(0)
-                self.error_label.configure(text = """There is no task chosen.
+            while True:
+                try:
+                    self.error_label.configure(text = "") #Removing any previous error messages
+                    self.error_message_frame.grid_remove()
+                    self.add_job_frame.update_idletasks()
+                    self.minutes = float(self.minutes_var.get())
+                    self.wof_and_tune = self.wof_tune_var.get()
+                    #WOF and tune cannot be No if minutes is zero as then no task has been done 
+                    if  self.minutes == 0 and self.wof_and_tune == "No":
+                        self.add_job_frame.update_idletasks()
+                        self.minutes_var.set("")
+                        self.wof_tune_var.set(0)
+                        self.error_label.configure(text = """There is no task chosen.
 Please increase minutes spent on virus protection or change WOF and Tune to 'Yes'""")
-                self.error_label.grid(row = 0, column = 1 )
-                self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+                        self.error_label.grid(row = 0, column = 1 )
+                        self.error_message_frame.grid(row = 0, column = 0, sticky = N)
 
-            else:
-                self.job_num = int(self.job_num_var.get())
-                self.name = self.first_name_var.get().strip().capitalize() + " " + \
-                            self.last_name_var.get().strip().capitalize()
-                self.distance = float(self. distance_var.get())
+                    else:
+                        self.job_num = int(self.job_num_var.get())
+                        self.name = self.first_name_var.get().strip().capitalize() + " " + \
+                                    self.last_name_var.get().strip().capitalize()
+                        self.distance = float(self. distance_var.get())
 
-                #Round Distance
-                if self.distance % 1 >=0.5:
-                    self.distance = math.ceil(self.distance)
-                else:
-                    self.distance = math.floor(self.distance)
-                    
+                        #Round Distance
+                        if self.distance % 1 >=0.5:
+                            self.distance = math.ceil(self.distance)
+                        else:
+                            self.distance = math.floor(self.distance)
+                            
 
-                self.calc_charge()
+                        self.calc_charge()
 
-                #Indivual Job Objects
-                self.job = Job(self.job_num, self.name, self.distance, self.minutes,
-                               self.wof_and_tune, self.charge)
+                        #Indivual Job Objects
+                        self.job = Job(self.job_num, self.name, self.distance, self.minutes,
+                                       self.wof_and_tune, self.charge)
+                        
+                        #Collection of the Objects  
+                        self.jobs.append(self.job)
+
+                        #Reset Input Areas
+                        self.job_num_var.set("")
+                        self.first_name_var.set("")
+                        self.last_name_var.set("")
+                        self.distance_var.set("")
+                        self.minutes_var.set("")
+                        self.wof_tune_var.set(0)
+
+                        break
+                        
+                except:
+                    self.add_job_frame.update_idletasks() 
+                    self.error_label.configure(text = """That is not a valid input. Please note that job number, minutes,
+and distance must be numbers and that job number must be a whole number.""")
+                    self.error_label.grid(row = 0, column = 1 )
+                    self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+                    break
+
                 
-                #Collection of the Objects  
-                self.jobs.append(self.job)
-
-                #Reset Input Areas
-                self.job_num_var.set("")
-                self.first_name_var.set("")
-                self.last_name_var.set("")
-                self.distance_var.set("")
-                self.minutes_var.set("")
-                self.wof_tune_var.set(0)
 
     def calc_charge(self):
         self.charge = 0
@@ -223,7 +242,7 @@ Please increase minutes spent on virus protection or change WOF and Tune to 'Yes
              self.job_cards_frame.grid(row = 0, column = 0)
              self.job_cards_frame.configure(pady = 10, padx = 10)
              self.index = 0 #which job the cards are on
-
+             self.job_cards_frame.update_idletasks()
              #Company Logo
              #Suzy has supplied and given permission for this logo to be used in this programme
 
@@ -262,6 +281,7 @@ Please increase minutes spent on virus protection or change WOF and Tune to 'Yes
                                        command = self.get_to_add_jobs)
              self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
          else:
+             self.add_job_frame.update_idletasks()
              self.error_label.configure(text = "There are no jobs stored")
              self.error_label.grid(row = 0, column = 1 )
              self.error_message_frame.grid(row = 0, column = 0, sticky = N) 
@@ -297,6 +317,7 @@ Please increase minutes spent on virus protection or change WOF and Tune to 'Yes
     def get_to_add_jobs(self):
         self.job_cards_frame.grid_remove()
         self.add_job_frame.grid(row = 0, column = 0)
+        self.add_job_frame.update_idletasks()
 
 #Main Routine
 if __name__=="__main__":
