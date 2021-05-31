@@ -395,8 +395,19 @@ and distance must be numbers and that job number must be a whole number.""")
 
         #Scrolled Text box of Job Information
         self.job_summary_box = ScrolledText(self.summary_frame, font = ("Sans Serif", 13),
-                                            pady = 5, height = 8, width = 48, wrap = 'word')
+                                            pady = 8, padx = 8, height = 8, width = 48, wrap = 'word')
         self.job_summary_box.grid(row = 2, column = 0, columnspan = 2)
+
+        for i in range(len(self.jobs)):
+            self.job_summary_box.insert(END,"Job Number: "+ str(self.jobs[i].job_num) + "\n" +
+                                      "Customer Name: " + self.jobs[i].name + "\n" +
+                                        "Distance Travelled to client (km): " + str(self.jobs[i].distance) +
+                                        "\n" + "Minutes spent on Virus Protection: " + str(self.jobs[i].minutes) +
+                                        "\n" + "Was WOF and Tune required? " + self.jobs[i].wof_and_tune + "\n"
+                                        + "Total Charge: $" + str(self.jobs[i].charge + "\n" +
+                                                                "_____________________________" + "\n"))
+
+        self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
 
         #Getting to Add job frame button
         self.add_a_job_btn = Button(self.summary_frame, text = "Add a Job",
