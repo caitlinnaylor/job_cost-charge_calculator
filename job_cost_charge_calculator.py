@@ -31,7 +31,7 @@ class JobCostGUI:
         #Add a Job Label
         self.add_job_label = Label(self.add_job_frame, text = "Add a Job",
                                    font = ("Sans Serif", 17), bg = "#cceeff")
-        self.add_job_label.grid(row = 1, column = 0, sticky = NW)
+        self.add_job_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
         #Job Number Label
         self.job_num_label = Label(self.add_job_frame, text = "Job Number",
@@ -123,15 +123,15 @@ class JobCostGUI:
         #lambda code from
         #https://www.reddit.com/r/learnpython/comments/cdfmn5/tkinter_help_command_running_before_clicked/
         self.enter_job_btn = Button(self.add_job_frame, text = "Enter",
-                                    font = ("Sans Serif", 11),width = 10, bg = "white", 
+                                    font = ("Sans Serif", 11),width = 8, bg = "white", 
                                     command = lambda:self.store_input(Job)) 
-        self.enter_job_btn.grid(row = 9, column = 3, sticky = NE)
+        self.enter_job_btn.grid(row = 9, column = 2, pady = 5, sticky = NE)
 
         #Show Jobs Buttons
         self.show_jobs_btn = Button(self.add_job_frame, text = "Show Jobs",
-                                    font = ("Sans Serif", 11), width = 10, bg = "white", 
+                                    font = ("Sans Serif", 11), width = 8, bg = "white", 
                                     command = lambda:self.get_to_job_cards())
-        self.show_jobs_btn.grid(row = 10, column = 3, pady = 5, sticky = NE)
+        self.show_jobs_btn.grid(row = 9, column = 3, padx = 5, pady = 5, sticky = NE)
 
         #Creation of other frames
         self.job_cards_frame = Frame(parent)
@@ -270,7 +270,7 @@ and distance must be numbers and that job number must be a whole number.""")
          if len(self.jobs)>0:
              self.add_job_frame.grid_remove()
              self.job_cards_frame.grid(row = 0, column = 0)
-             self.job_cards_frame.configure(pady = 10, padx = 10, bg = "#cceeff")
+             self.job_cards_frame.configure(pady = 10, padx = 13, bg = "#cceeff")
              self.index = 0 #which job the cards are on
              self.job_cards_frame.update_idletasks()
              #Company Logo
@@ -285,7 +285,7 @@ and distance must be numbers and that job number must be a whole number.""")
              self.jobs_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
              #Text Box of Job Info
-             self.job_info = Text(self.job_cards_frame, width = 47, height = 3,
+             self.job_info = Text(self.job_cards_frame, width = 48, height = 3,
                                      font = ("Sans Serif", 13), pady = 8, padx = 8)
              self.job_info.grid(row = 2, column = 0, columnspan = 2)
 
