@@ -1,5 +1,6 @@
 from tkinter import *
 import math
+from tkinter.scrolledtext import *
 #15/05/21
 #Caitlin Naylor 
 #Job Cost/Charge Calulator
@@ -371,6 +372,7 @@ and distance must be numbers and that job number must be a whole number.""")
         self.error_label.configure(text = "")
         self.error_message_frame.grid_remove() #removing any previous error messages
         self.job_cards_frame.grid_remove()
+        self.summary_frame.grid_remove()
         self.add_job_frame.grid(row = 0, column = 0)
         self.add_job_frame.update_idletasks()
 
@@ -379,6 +381,36 @@ and distance must be numbers and that job number must be a whole number.""")
         self.summary_frame.grid(row = 0, column = 0)
         self.summary_frame.update_idletasks()
         self.summary_frame.configure(pady = 10, padx = 13, bg = "#cceeff")
+
+        #Company Logo
+        #Suzy has supplied and given permission for this logo to be used in this programme
+
+        self.logo_label = Label(self.summary_frame, image = self.logo, bg = "#cceeff")
+        self.logo_label.grid(row = 0, column = 0, columnspan = 2)
+
+        #Summary Heading Label
+        self.summary_label = Label(self.summary_frame, text = "Summary of Jobs",
+                                 font = ("Sans Serif", 17), pady = 5, bg = "#cceeff")
+        self.summary_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
+
+        #Scrolled Text box of Job Information
+        self.job_summary_box = ScrolledText(self.summary_frame, font = ("Sans Serif", 13),
+                                            pady = 5, height = 8, width = 48, wrap = 'word')
+        self.job_summary_box.grid(row = 2, column = 0, columnspan = 2)
+
+        #Getting to Add job frame button
+        self.add_a_job_btn = Button(self.summary_frame, text = "Add a Job",
+                                  font = ("Sans Serif", 11), width = 8, bg = "white", 
+                                       command = self.get_to_add_jobs)
+        self.add_a_job_btn.grid(row = 3, column = 1, sticky = NE, pady = 10)
+
+        #Back to Job Cards frame button
+        self.back_to_job_cards_btn = Button(self.summary_frame, text = "Back",
+                                            font = ("Sans Serif", 11), width = 8, bg = "white", 
+                                               command = self.get_to_job_cards)
+        self.back_to_job_cards_btn.grid(row = 1, column = 1, pady = 5, sticky = NE)
+                                            
+        
 
 #Main Routine
 if __name__=="__main__":
