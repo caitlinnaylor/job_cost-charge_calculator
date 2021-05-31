@@ -138,6 +138,8 @@ class JobCostGUI:
 
         self.error_message_frame = Frame(parent)
 
+        self.summary_frame = Frame(parent)
+
         #Error message label creation
         self.error_label = Label(self.error_message_frame, font = ("Sans Serif", 9))
 
@@ -312,11 +314,21 @@ and distance must be numbers and that job number must be a whole number.""")
                                   font = ("Sans Serif", 11), width = 8, bg = "white", 
                                        command = self.get_to_add_jobs)
              self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
+
+             #Getting to Summary Frame Button
+             #Icon from flaticon, free licensed for use,
+             self.icon = PhotoImage(file = "info-button.png")
+             self.summary_btn = Button(self.job_cards_frame, image = self.icon,
+                                       font = ("Sans Serif", 11), width = 30, height = 30,
+                                       bg = "white", command = self.get_to_summary)
+             self.summary_btn.grid(row = 1, column = 1, sticky = NE, pady = 5)
+             
          else:
              self.add_job_frame.update_idletasks()
              self.error_label.configure(text = "There are no jobs stored")
              self.error_label.grid(row = 0, column = 1 )
-             self.error_message_frame.grid(row = 0, column = 0, sticky = N) 
+             self.error_message_frame.grid(row = 0, column = 0, sticky = N)
+
             
     def nextjob(self):
         if len(self.jobs) > 1:
@@ -335,8 +347,7 @@ and distance must be numbers and that job number must be a whole number.""")
         else:
             self.error_label.configure(text = "There is only one job stored")
             self.error_label.grid(row = 0, column = 1 )
-            self.error_message_frame.grid(row = 0, column = 0, sticky = N)
-                                          
+            self.error_message_frame.grid(row = 0, column = 0, sticky = N)                                     
 
     def prevjob(self):
         if len(self.jobs) > 0:
@@ -362,6 +373,12 @@ and distance must be numbers and that job number must be a whole number.""")
         self.job_cards_frame.grid_remove()
         self.add_job_frame.grid(row = 0, column = 0)
         self.add_job_frame.update_idletasks()
+
+    def get_to_summary(self):
+        self.job_cards_frame.grid_remove()
+        self.summary_frame.grid(row = 0, column = 0)
+        self.summary_frame.update_idletasks()
+        self.summary_frame.configure(pady = 10, padx = 13, bg = "#cceeff")
 
 #Main Routine
 if __name__=="__main__":
