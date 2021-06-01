@@ -272,6 +272,7 @@ and distance must be numbers and that job number must be a whole number.""")
          self.error_message_frame.grid_remove() #removing any previous error messages
          if len(self.jobs)>0:
              self.add_job_frame.grid_remove()
+             self.summary_frame.grid_remove()
              self.job_cards_frame.grid(row = 0, column = 0)
              self.job_cards_frame.configure(pady = 10, padx = 13, bg = "#cceeff")
              self.index = 0 #which job the cards are on
@@ -395,17 +396,21 @@ and distance must be numbers and that job number must be a whole number.""")
 
         #Scrolled Text box of Job Information
         self.job_summary_box = ScrolledText(self.summary_frame, font = ("Sans Serif", 13),
-                                            pady = 8, padx = 8, height = 8, width = 48, wrap = 'word')
+                                            pady = 8, padx = 8, height = 8, width = 46,
+                                            wrap = 'word')
         self.job_summary_box.grid(row = 2, column = 0, columnspan = 2)
 
         for i in range(len(self.jobs)):
             self.job_summary_box.insert(END,"Job Number: "+ str(self.jobs[i].job_num) + "\n" +
                                       "Customer Name: " + self.jobs[i].name + "\n" +
-                                        "Distance Travelled to client (km): " + str(self.jobs[i].distance) +
-                                        "\n" + "Minutes spent on Virus Protection: " + str(self.jobs[i].minutes) +
-                                        "\n" + "Was WOF and Tune required? " + self.jobs[i].wof_and_tune + "\n"
-                                        + "Total Charge: $" + str(self.jobs[i].charge + "\n" +
-                                                                "_____________________________" + "\n"))
+                                        "Distance Travelled to client (km): "
+                                        + str(self.jobs[i].distance) +
+                                        "\n" + "Minutes spent on Virus Protection: "
+                                        + str(self.jobs[i].minutes) +
+                                        "\n" + "Was WOF and Tune required? "
+                                        + self.jobs[i].wof_and_tune + "\n"
+                                        + "Total Charge: $" + str(self.jobs[i].charge)
+                                        + "\n" + "_____________________________" + "\n")
 
         self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
 
