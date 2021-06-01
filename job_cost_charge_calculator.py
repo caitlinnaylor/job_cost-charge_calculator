@@ -403,16 +403,16 @@ and distance must be numbers and that job number must be a whole number.""")
         for i in range(len(self.jobs)):
             self.job_summary_box.insert(END,"Job Number: "+ str(self.jobs[i].job_num) + "\n" +
                                       "Customer Name: " + self.jobs[i].name + "\n" +
-                                        "Distance Travelled to client (km): "
+                                        "Distance Travelled to Client (km): "
                                         + str(self.jobs[i].distance) +
                                         "\n" + "Minutes spent on Virus Protection: "
                                         + str(self.jobs[i].minutes) +
-                                        "\n" + "Was WOF and Tune required? "
+                                        "\n" + "Was WOF and Tune Required? "
                                         + self.jobs[i].wof_and_tune + "\n"
                                         + "Total Charge: $" + str(self.jobs[i].charge)
                                         + "\n" + "_____________________________" + "\n")
 
-        self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
+        self.job_summary_box.configure(state = 'disabled') #Disabling so the box is not typable in
 
         #Getting to Add job frame button
         self.add_a_job_btn = Button(self.summary_frame, text = "Add a Job",
