@@ -47,7 +47,7 @@ class JobCostGUI:
         self.job_num_box.grid(row = 2, column = 1, columnspan = 3, sticky = NW)
 
         #Name Label
-        self.name_label = Label(self.add_job_frame, text = "Name",
+        self.name_label = Label(self.add_job_frame, text = "Customer Name",
                                 font = ("Sans Serif", 11), bg = "#cceeff")
         self.name_label.grid(row = 3, column = 0, sticky = NW)
 
@@ -128,6 +128,14 @@ class JobCostGUI:
                                     command = lambda:self.store_input(Job)) 
         self.enter_job_btn.grid(row = 9, column = 2, pady = 5, sticky = NE)
 
+        #Reminder jobs a final label
+        self.reminder_label = Label(self.add_job_frame,
+                                    text = """Note: All job entries are final so please
+double check before pressing enter""", 
+                                    font = ("Sans Serif", 7), bg = "#cceeff")
+        self.reminder_label.grid(row = 10, column = 2, columnspan = 2)
+                                    
+
         #Show Jobs Buttons
         self.show_jobs_btn = Button(self.add_job_frame, text = "Show Jobs",
                                     font = ("Sans Serif", 11), width = 8, bg = "white", 
@@ -150,7 +158,7 @@ class JobCostGUI:
 
         #All input places need to be filled in 
         if self.minutes_var.get() == "" or self.wof_tune_var.get() == "0" or \
-           self.first_name_var.get() == "" or self.last_name_var.get == "" or \
+           self.first_name_var.get() == "" or self.last_name_var.get() == "" or \
            self.job_num_var.get() == "" or self.distance_var.get() == "":
             self.add_job_frame.update_idletasks()
             self.error_label.configure(text = "Please fill in all the entry areas before pressing enter.")
@@ -281,7 +289,7 @@ and distance must be numbers and that job number must be a whole number.""")
              #Suzy has supplied and given permission for this logo to be used in this programme
 
              self.logo_label = Label(self.job_cards_frame, image = self.logo, bg = "#cceeff")
-             self.logo_label.grid(row = 0, column = 0, columnspan = 2)
+             self.logo_label.grid(row = 0, column = 0, columnspan = 4)
 
              #Jobs Heading Label
              self.jobs_label = Label(self.job_cards_frame, text = "Jobs",
@@ -291,7 +299,7 @@ and distance must be numbers and that job number must be a whole number.""")
              #Text Box of Job Info
              self.job_info = Text(self.job_cards_frame, width = 48, height = 3,
                                      font = ("Sans Serif", 13), pady = 8, padx = 8)
-             self.job_info.grid(row = 2, column = 0, columnspan = 2)
+             self.job_info.grid(row = 2, column = 0, columnspan = 4)
 
 
              self.job_info.insert(END,"Job Number: "+ str(self.jobs[self.index].job_num) + "\n" +
@@ -304,18 +312,18 @@ and distance must be numbers and that job number must be a whole number.""")
              self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
                                   font = ("Sans Serif", 11), width = 8, bg = "white",
                                    command = self.nextjob)
-             self.nextbtn.grid(row = 3, column = 1, sticky = NE, pady = 5)
+             self.nextbtn.grid(row = 3, column = 2, sticky = NW, pady = 5)
 
              self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
                                   font = ("Sans Serif", 11), width = 8, bg = "white",
                                    command = self.prevjob)
-             self.prevbtn.grid(row = 3, column = 0, sticky = NW, pady = 5)
+             self.prevbtn.grid(row = 3, column = 1, sticky = NE, pady = 5, padx = 5)
 
              #Getting to Add a Job Frame Button
              self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
                                   font = ("Sans Serif", 11), width = 8, bg = "white", 
                                        command = self.get_to_add_jobs)
-             self.add_job_btn.grid(row = 4, column = 1, sticky = NE)
+             self.add_job_btn.grid(row = 4, column = 3, sticky = NE, pady = 5)
 
              #Getting to Summary Frame Button
              #Icon from flaticon, free licensed for use,
@@ -323,7 +331,7 @@ and distance must be numbers and that job number must be a whole number.""")
              self.summary_btn = Button(self.job_cards_frame, image = self.icon,
                                        font = ("Sans Serif", 11), width = 30, height = 30,
                                        bg = "white", command = self.get_to_summary)
-             self.summary_btn.grid(row = 1, column = 1, sticky = NE, pady = 5)
+             self.summary_btn.grid(row = 1, column = 3, sticky = NE, pady = 5)
              
          else:
              self.add_job_frame.update_idletasks()
