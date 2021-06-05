@@ -17,114 +17,117 @@ class Job:
 class JobCostGUI:
     def __init__(self, parent):
         self.jobs = []
+        self.BG_COLOUR = "#cceeff"
+        self.BTN_COLOUR = "white"
+        self.FONT = "Sans Serif"
         #Add Jobs Frame
         self.add_job_frame = Frame(parent)
-        self.add_job_frame.configure(pady = 10, padx = 10, bg = "#cceeff")
+        self.add_job_frame.configure(pady = 10, padx = 10, bg = self.BG_COLOUR)
         self.add_job_frame.grid(row = 0, column = 0)
 
         #Company Logo
-        #Suzy has supplied and given permission for this logo to be used in this programme
+        #Suzy has supplied and given permission for this logo to be used in this program
 
         self.logo = PhotoImage(file = "logo.gif")
-        self.logo_label = Label(self.add_job_frame, image = self.logo, bg = "#cceeff")
+        self.logo_label = Label(self.add_job_frame, image = self.logo, bg = self.BG_COLOUR)
         self.logo_label.grid(row = 0, column = 0, columnspan = 4)
             
         #Add a Job Label
         self.add_job_label = Label(self.add_job_frame, text = "Add a Job",
-                                   font = ("Sans Serif", 17), bg = "#cceeff")
+                                   font = (self.FONT, 17), bg = self.BG_COLOUR)
         self.add_job_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
         #Job Number Label
         self.job_num_label = Label(self.add_job_frame, text = "Job Number",
-                                   font = ("Sans Serif", 11), bg = "#cceeff")
+                                   font = (self.FONT, 11), bg = self.BG_COLOUR)
         self.job_num_label.grid(row = 2, column = 0, sticky = NW)
 
         #Job Number Input
         self.job_num_var = StringVar() #StringVar so that the text box is blank upon opening
         self.job_num_var.set("")
-        self.job_num_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
+        self.job_num_box = Entry(self.add_job_frame, font = (self.FONT, 10),
                                  textvariable = self.job_num_var, width = 30)
         self.job_num_box.grid(row = 2, column = 1, columnspan = 3, sticky = NW)
 
         #Name Label
         self.name_label = Label(self.add_job_frame, text = "Customer Name",
-                                font = ("Sans Serif", 11), bg = "#cceeff")
+                                font = (self.FONT, 11), bg = self.BG_COLOUR)
         self.name_label.grid(row = 3, column = 0, sticky = NW)
 
         #First Name Input
         self.first_name_var = StringVar()
         self.first_name_var.set("")
-        self.first_name_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
+        self.first_name_box = Entry(self.add_job_frame, font = (self.FONT, 10),
                                     width = 30, textvariable = self.first_name_var)
         self.first_name_box.grid(row = 4, column = 0, sticky = NW)
 
         #Last Name Input
         self.last_name_var = StringVar()
         self.last_name_var.set("")
-        self.last_name_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
+        self.last_name_box = Entry(self.add_job_frame, font = (self.FONT, 10),
                                    width = 30, textvariable = self.last_name_var)
         self.last_name_box.grid(row = 4, column = 1, columnspan = 3, sticky = NW)
 
         #First Name Label
         self.first_name_label = Label(self.add_job_frame, text = "First Name",
-                                      font = ("Sans Serif", 8), bg = "#cceeff")
+                                      font = (self.FONT, 8), bg = self.BG_COLOUR)
         self.first_name_label.grid(row = 5, column = 0, sticky = NW)
 
         #Last Name Label
         self.last_name_label = Label(self.add_job_frame, text = "Last Name",
-                                     font = ("Sans Serif", 8), bg = "#cceeff")
+                                     font = (self.FONT, 8), bg = self.BG_COLOUR)
         self.last_name_label.grid(row = 5, column = 1, sticky = NW)
 
         #Distance Travelled Label
         self.distance_label = Label(self.add_job_frame,
                                     text = "Distance Travelled to Client (km)",
-                                    font = ("Sans Serif", 11), bg = "#cceeff")
+                                    font = (self.FONT, 11), bg = self.BG_COLOUR)
         self.distance_label.grid(row = 6, column = 0, sticky = NW)
 
         #Distance Input
         self.distance_var = StringVar() #String not Int as IntVar automatically rounds down
         self.distance_var.set("")
-        self.distance_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
+        self.distance_box = Entry(self.add_job_frame, font = (self.FONT, 10),
                                   width = 30, textvariable = self.distance_var)
         self.distance_box.grid(row = 6, column = 1, columnspan = 3, sticky = NW)
 
         #Minutes Spent on Virus Protection Label
         self.minutes_label = Label(self.add_job_frame,
                                    text = "Minutes Spent on Virus Protection",
-                                   font = ("Sans Serif", 11), bg = "#cceeff")
+                                   font = (self.FONT, 11), bg = self.BG_COLOUR)
         self.minutes_label.grid(row = 7, column = 0, sticky = NW)
 
         #Minutes Input
         self.minutes_var = StringVar() #StringVar so that the text box is blank upon opening
         self.minutes_var.set("") 
-        self.minutes_box = Entry(self.add_job_frame, font = ("Sans Serif", 10),
+        self.minutes_box = Entry(self.add_job_frame, font = (self.FONT, 10),
                                  width = 30, textvariable = self.minutes_var)
         self.minutes_box.grid(row = 7, column = 1, columnspan = 3, sticky = NW)
 
         #Wof and tune Label
         wof_and_tune_label = Label(self.add_job_frame, text = "Was a WOF and Tune Required?",
-                                   font = ("Sans Serif", 11), bg = "#cceeff")
+                                   font = (self.FONT, 11), bg = self.BG_COLOUR)
         wof_and_tune_label.grid(row = 8, column = 0, sticky = NW)
 
         #Wof and tune radiobuttons
         self.wof_tune_var = StringVar()
         self.wof_tune_var.set(0)
-        self.wof_tune_rbs_names = ["Yes", "No"]
+        self.WOF_TUNE_RBS_NAMES = ["Yes", "No"]
         self.wof_tune_rbs = []
         
-        for i in range(len(self.wof_tune_rbs_names)):
+        for i in range(len(self.WOF_TUNE_RBS_NAMES)):
             self.wof_tune_rbs.append(Radiobutton(self.add_job_frame,
-                                                 text = self.wof_tune_rbs_names[i],
-                                                 value = self.wof_tune_rbs_names[i],
+                                                 text = self.WOF_TUNE_RBS_NAMES[i],
+                                                 value = self.WOF_TUNE_RBS_NAMES[i],
                                                   variable = self.wof_tune_var,
-                                                 font = ("Sans Serif", 11), bg = "#cceeff"))
+                                                 font = (self.FONT, 11), bg = self.BG_COLOUR))
             self.wof_tune_rbs[i].grid(row = 8, column = i +1, sticky = NW)
 
         #Enter Button to add a job
         #lambda code from
         #https://www.reddit.com/r/learnpython/comments/cdfmn5/tkinter_help_command_running_before_clicked/
         self.enter_job_btn = Button(self.add_job_frame, text = "Enter",
-                                    font = ("Sans Serif", 11),width = 8, bg = "white", 
+                                    font = (self.FONT, 11),width = 8, bg = self.BTN_COLOUR, 
                                     command = lambda:self.store_input(Job)) 
         self.enter_job_btn.grid(row = 9, column = 2, pady = 5, sticky = NE)
 
@@ -132,13 +135,13 @@ class JobCostGUI:
         self.reminder_label = Label(self.add_job_frame,
                                     text = """Note: All job entries are final so please
 double check before pressing enter""", 
-                                    font = ("Sans Serif", 7), bg = "#cceeff")
+                                    font = (self.FONT, 7), bg = self.BG_COLOUR)
         self.reminder_label.grid(row = 10, column = 2, columnspan = 2)
                                     
 
         #Show Jobs Buttons
         self.show_jobs_btn = Button(self.add_job_frame, text = "Show Jobs",
-                                    font = ("Sans Serif", 11), width = 8, bg = "white", 
+                                    font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR, 
                                     command = lambda:self.get_to_job_cards())
         self.show_jobs_btn.grid(row = 9, column = 3, padx = 5, pady = 5, sticky = NE)
 
@@ -150,7 +153,7 @@ double check before pressing enter""",
         self.summary_frame = Frame(parent)
 
         #Error message label creation
-        self.error_label = Label(self.error_message_frame, font = ("Sans Serif", 9))
+        self.error_label = Label(self.error_message_frame, font = (self.FONT, 9))
 
     def store_input(self, Job):
         self.error_label.configure(text = "") #Removing any previous error messages
@@ -262,7 +265,7 @@ and distance must be numbers and that job number must be a whole number.""")
         else:
             self.charge += FLAT_RATE + ((self.distance - 5)*0.5)
 
-        if self.wof_and_tune == self.wof_tune_rbs_names[0]: #yes
+        if self.wof_and_tune == self.WOF_TUNE_RBS_NAMES[0]: #yes
             self.charge += 100
 
         if self.minutes >0:
@@ -282,23 +285,23 @@ and distance must be numbers and that job number must be a whole number.""")
              self.add_job_frame.grid_remove()
              self.summary_frame.grid_remove()
              self.job_cards_frame.grid(row = 0, column = 0)
-             self.job_cards_frame.configure(pady = 10, padx = 13, bg = "#cceeff")
+             self.job_cards_frame.configure(pady = 10, padx = 13, bg = self.BG_COLOUR)
              self.index = 0 #which job the cards are on
              self.job_cards_frame.update_idletasks()
              #Company Logo
-             #Suzy has supplied and given permission for this logo to be used in this programme
+             #Suzy has supplied and given permission for this logo to be used in this program
 
-             self.logo_label = Label(self.job_cards_frame, image = self.logo, bg = "#cceeff")
+             self.logo_label = Label(self.job_cards_frame, image = self.logo, bg = self.BG_COLOUR)
              self.logo_label.grid(row = 0, column = 0, columnspan = 4)
 
              #Jobs Heading Label
              self.jobs_label = Label(self.job_cards_frame, text = "Jobs",
-                                     font = ("Sans Serif", 17), pady = 5, bg = "#cceeff")
+                                     font = (self.FONT, 17), pady = 5, bg = self.BG_COLOUR)
              self.jobs_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
              #Text Box of Job Info
              self.job_info = Text(self.job_cards_frame, width = 48, height = 3,
-                                     font = ("Sans Serif", 13), pady = 8, padx = 8)
+                                     font = (self.FONT, 13), pady = 8, padx = 8)
              self.job_info.grid(row = 2, column = 0, columnspan = 4)
 
 
@@ -310,18 +313,18 @@ and distance must be numbers and that job number must be a whole number.""")
 
              #Next and Prev Buttons
              self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
-                                  font = ("Sans Serif", 11), width = 8, bg = "white",
+                                  font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR,
                                    command = self.nextjob)
              self.nextbtn.grid(row = 3, column = 2, sticky = NW, pady = 5)
 
              self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
-                                  font = ("Sans Serif", 11), width = 8, bg = "white",
+                                  font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR,
                                    command = self.prevjob)
              self.prevbtn.grid(row = 3, column = 1, sticky = NE, pady = 5, padx = 5)
 
              #Getting to Add a Job Frame Button
              self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
-                                  font = ("Sans Serif", 11), width = 8, bg = "white", 
+                                  font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR, 
                                        command = self.get_to_add_jobs)
              self.add_job_btn.grid(row = 4, column = 3, sticky = NE, pady = 5)
 
@@ -329,8 +332,8 @@ and distance must be numbers and that job number must be a whole number.""")
              #Icon from flaticon, free licensed for use,
              self.icon = PhotoImage(file = "info-button.png")
              self.summary_btn = Button(self.job_cards_frame, image = self.icon,
-                                       font = ("Sans Serif", 11), width = 30, height = 30,
-                                       bg = "white", command = self.get_to_summary)
+                                       font = (self.FONT, 11), width = 30, height = 30,
+                                       bg = self.BTN_COLOUR, command = self.get_to_summary)
              self.summary_btn.grid(row = 1, column = 3, sticky = NE, pady = 5)
              
          else:
@@ -389,21 +392,21 @@ and distance must be numbers and that job number must be a whole number.""")
         self.job_cards_frame.grid_remove()
         self.summary_frame.grid(row = 0, column = 0)
         self.summary_frame.update_idletasks()
-        self.summary_frame.configure(pady = 10, padx = 13, bg = "#cceeff")
+        self.summary_frame.configure(pady = 10, padx = 13, bg = self.BG_COLOUR)
 
         #Company Logo
         #Suzy has supplied and given permission for this logo to be used in this programme
 
-        self.logo_label = Label(self.summary_frame, image = self.logo, bg = "#cceeff")
+        self.logo_label = Label(self.summary_frame, image = self.logo, bg = self.BG_COLOUR)
         self.logo_label.grid(row = 0, column = 0, columnspan = 2)
 
         #Summary Heading Label
         self.summary_label = Label(self.summary_frame, text = "Summary of Jobs",
-                                 font = ("Sans Serif", 17), pady = 5, bg = "#cceeff")
+                                 font = (self.FONT, 17), pady = 5, bg = self.BG_COLOUR)
         self.summary_label.grid(row = 1, column = 0, sticky = NW, pady = 5)
 
         #Scrolled Text box of Job Information
-        self.job_summary_box = ScrolledText(self.summary_frame, font = ("Sans Serif", 13),
+        self.job_summary_box = ScrolledText(self.summary_frame, font = (self.FONT, 13),
                                             pady = 8, padx = 8, height = 8, width = 46,
                                             wrap = 'word')
         self.job_summary_box.grid(row = 2, column = 0, columnspan = 2)
@@ -424,13 +427,13 @@ and distance must be numbers and that job number must be a whole number.""")
 
         #Getting to Add job frame button
         self.add_a_job_btn = Button(self.summary_frame, text = "Add a Job",
-                                  font = ("Sans Serif", 11), width = 8, bg = "white", 
+                                  font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR, 
                                        command = self.get_to_add_jobs)
         self.add_a_job_btn.grid(row = 3, column = 1, sticky = NE, pady = 10)
 
         #Back to Job Cards frame button
         self.back_to_job_cards_btn = Button(self.summary_frame, text = "Back",
-                                            font = ("Sans Serif", 11), width = 8, bg = "white", 
+                                            font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR, 
                                                command = self.get_to_job_cards)
         self.back_to_job_cards_btn.grid(row = 1, column = 1, pady = 5, sticky = NE)
                                             
