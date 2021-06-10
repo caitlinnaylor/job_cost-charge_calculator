@@ -312,15 +312,15 @@ and distance must be numbers and that job number must be a whole number.""")
              self.job_info.configure(state = 'disabled') #Disabling so the box is not typable in
 
              #Next and Prev Buttons
-             self.nextbtn = Button(self.job_cards_frame, text = "Next Job",
+             self.next_card_btn = Button(self.job_cards_frame, text = "Next Job",
                                   font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR,
-                                   command = self.nextjob)
-             self.nextbtn.grid(row = 3, column = 2, sticky = NW, pady = 5)
+                                   command = self.next_job)
+             self.next_card_btn.grid(row = 3, column = 2, sticky = NW, pady = 5)
 
-             self.prevbtn = Button(self.job_cards_frame, text = "Prev Job",
+             self.prev_card_btn = Button(self.job_cards_frame, text = "Prev Job",
                                   font = (self.FONT, 11), width = 8, bg = self.BTN_COLOUR,
-                                   command = self.prevjob)
-             self.prevbtn.grid(row = 3, column = 1, sticky = NE, pady = 5, padx = 5)
+                                   command = self.prev_job)
+             self.prev_card_btn.grid(row = 3, column = 1, sticky = NE, pady = 5, padx = 5)
 
              #Getting to Add a Job Frame Button
              self.add_job_btn = Button(self.job_cards_frame, text = "Add a Job",
@@ -343,7 +343,7 @@ and distance must be numbers and that job number must be a whole number.""")
              self.error_message_frame.grid(row = 0, column = 0, sticky = N)
 
             
-    def nextjob(self):
+    def next_job(self):
         if len(self.jobs) > 1:
             if self.index != (len(self.jobs)-1): #if at end of list, go back to start
                 self.index+=1
@@ -362,7 +362,7 @@ and distance must be numbers and that job number must be a whole number.""")
             self.error_label.grid(row = 0, column = 1 )
             self.error_message_frame.grid(row = 0, column = 0, sticky = N)                                     
 
-    def prevjob(self):
+    def prev_job(self):
         if len(self.jobs) > 0:
             if self.index !=0:
                 self.index-=1
